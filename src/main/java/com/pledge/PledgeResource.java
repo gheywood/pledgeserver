@@ -14,8 +14,6 @@ import javax.ws.rs.core.MediaType;
 @Path("/pledge/")
 public class PledgeResource
 {
-
-
     @Path("{pledgeId}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -29,7 +27,5 @@ public class PledgeResource
         testPledge.user_id = 1;
 
         return testPledge;
-
     }
-
 }
