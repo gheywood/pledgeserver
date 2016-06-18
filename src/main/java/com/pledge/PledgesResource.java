@@ -27,6 +27,7 @@ public class PledgesResource
         testPledge.description = "Pledge 1";
         testPledge.type_id = 2;
         testPledge.user_id = 1;
+        testPledge.pledge_id = 1;
 
         Pledge testPledge2 = new Pledge();
         testPledge2.title = "Pledge2";
@@ -34,6 +35,7 @@ public class PledgesResource
         testPledge2.description = "Pledge 2";
         testPledge2.type_id = 2;
         testPledge2.user_id = 2;
+        testPledge2.pledge_id = 2;
 
         Pledge testPledge3 = new Pledge();
         testPledge3.title = "Pledge3";
@@ -41,6 +43,7 @@ public class PledgesResource
         testPledge3.description = "Pledge 3";
         testPledge3.type_id = 2;
         testPledge3.user_id = 3;
+        testPledge3.pledge_id = 3;
 
         Pledge testPledge4 = new Pledge();
         testPledge4.title = "Pledge4";
@@ -48,6 +51,7 @@ public class PledgesResource
         testPledge4.description = "Pledge 4";
         testPledge4.type_id = 2;
         testPledge4.user_id = 4;
+        testPledge4.pledge_id = 4;
 
         List<Pledge> pledges = Lists.newArrayList(testPledge, testPledge2, testPledge3, testPledge4);
         return pledges;

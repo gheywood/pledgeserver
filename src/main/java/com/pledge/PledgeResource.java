@@ -25,6 +25,7 @@ public class PledgeResource
         testPledge.description = "Blaaaaah";
         testPledge.type_id = 2;
         testPledge.user_id = 1;
+        testPledge.pledge_id = 111;
 
         return testPledge;
     }
