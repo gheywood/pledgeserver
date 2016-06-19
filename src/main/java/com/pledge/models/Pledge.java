@@ -15,5 +15,4 @@ public class Pledge
     public Date end_date;
     public int type_id;
     public int delete_flag;
-
 }

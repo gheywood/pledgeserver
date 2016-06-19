@@ -1,6 +1,8 @@
 package com.pledge;
 
 import com.pledge.models.Pledge;
+import com.pledge.mongo.MongoPledge;
+import org.apache.log4j.Logger;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -14,19 +16,13 @@ import javax.ws.rs.core.MediaType;
 @Path("/pledge/")
 public class PledgeResource
 {
+    final static Logger logger = Logger.getLogger(PledgeResource.class);
     @Path("{pledgeId}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Pledge getPledge(@PathParam("pledgeId") int pledgeId)
     {
-        Pledge testPledge = new Pledge();
-        testPledge.title = "Blahhh";
-        testPledge.delete_flag = 1;
-        testPledge.description = "Blaaaaah";
-        testPledge.type_id = 2;
-        testPledge.user_id = 1;
-        testPledge.pledge_id = 111;
-
-        return testPledge;
+        logger.info("request to get pledge with id " + pledgeId);
+        return MongoPledge.getPledgeForId(pledgeId);
     }
 }
