@@ -7,9 +7,7 @@ import org.apache.log4j.Logger;
 
 import java.util.List;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -47,5 +45,17 @@ public class PledgesResource
         logger.info("request to delete test pledges");
         MongoPledge.removeAllPledges();
         return Response.ok().build();
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createPledge(Pledge pledge)
+    {
+        logger.info("adding pledge " + pledge);
+        boolean result = MongoPledge.insertPledge(pledge);
+        if (result)
+            return Response.ok().build();
+        else
+            return Response.serverError().build();
     }
 }

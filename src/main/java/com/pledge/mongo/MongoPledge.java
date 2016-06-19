@@ -33,7 +33,7 @@ public class MongoPledge
     {
         logger.info("getting pledge with id " + id);
         // Returns an Pledge object based on Id, or returns null if none exist
-        MongoDatabase database = MongoConnector.getMongoClient().getDatabase(MongoConnector.mongoDatabase);
+        MongoDatabase database = MongoConnector.getDatabase();
         MongoCollection<Document> pledgeColl = database.getCollection(pledgeCollectionName);
         Document obj = pledgeColl.find(eq(PledgeAdaptor.ID,id)).first();
         Pledge p = null;
@@ -69,6 +69,31 @@ public class MongoPledge
         logger.info("returning " + pledges.size() + " pledges");
         return pledges;
     }
+
+
+    public static boolean insertPledge(Pledge p)
+    {
+        logger.info("inserting pledge " + p);
+        MongoDatabase database = MongoConnector.getDatabase();
+        MongoCollection<Document> pledgeCol = database.getCollection(pledgeCollectionName);
+
+        Document existing = pledgeCol.find(eq(PledgeAdaptor.ID,p.pledge_id)).first();
+        if(existing != null)
+        {
+            // Updating
+            logger.info(" Pledge " + p.pledge_id + " already exists, updating existing");
+            pledgeCol.deleteOne(eq(PledgeAdaptor.ID,p.pledge_id));
+            pledgeCol.insertOne(PledgeAdaptor.toMongo(p));
+        }
+        else
+        {
+            // create new
+            pledgeCol.insertOne(PledgeAdaptor.toMongo(p));
+        }
+
+        return true;
+    }
+
 
     public static void populateTestPledges()
     {
