@@ -7,11 +7,12 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.pledge.models.Pledge;
 import com.pledge.mongo.adaptors.PledgeAdaptor;
-import org.apache.log4j.Logger;
+import com.sun.research.ws.wadl.Doc;
 import org.bson.Document;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import static com.mongodb.client.model.Filters.*;
 
@@ -20,14 +21,12 @@ import static com.mongodb.client.model.Filters.*;
  */
 public class MongoPledge
 {
-    final static Logger logger = Logger.getLogger(MongoPledge.class);
+    final static Logger logger = Logger.getLogger(MongoPledge.class.getName());
     private static final String pledgeCollectionName = "PledgeCollection";
 
     /*
         Class to handle all the Pledge related instances in Mongo
      */
-
-
 
     public static Pledge getPledgeForId(int id)
     {
@@ -49,6 +48,18 @@ public class MongoPledge
         }
 
         return p;
+    }
+
+    public static List<Pledge> getPledgesForUserId(int userId)
+    {
+        logger.info("getting pledges that match user id " + userId);
+        MongoDatabase database = MongoConnector.getDatabase();
+        MongoCollection<Document> col = database.getCollection(pledgeCollectionName);
+        MongoCursor<Document> find = col.find(eq(PledgeAdaptor.USER_ID, userId)).iterator();
+        List<Pledge> pledges = Lists.newArrayList();
+        while(find.hasNext())
+            pledges.add(PledgeAdaptor.toPledge(find.next()));
+        return pledges;
     }
 
     public static List<Pledge> getAllPledges()
